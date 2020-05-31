@@ -24,12 +24,12 @@ class repo():
             'git_url',
             ]
 
-        RepoData = extract_data(DataNeeded, RepoDataFromGithub)
+        self.RepoData = extract_data(DataNeeded, RepoDataFromGithub)
 
         
 
         # print(json.dumps(RepoData , indent = True))
-        save_json('test2' , RepoData)
+        save_json('output_of_Repo' , self.RepoData)
 
         return json.dumps(RepoData , indent = True)
         

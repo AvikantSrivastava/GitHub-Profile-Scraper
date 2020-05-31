@@ -1,6 +1,6 @@
 import json
 import requests
-from helpme import extract_data
+from helpme import extract_data, save_json
 # from pprint import pprint
 
 # Username = input("Enter Your Username")
@@ -32,6 +32,9 @@ class User():
             'followers'
         ]
         self.UserData = extract_data(DataNeeded, UserDataFromGithub)
+                
+        save_json('output_of_User' , self.UserData)
+
         return json.dumps(self.UserData, indent= True)
 
 
