@@ -1,9 +1,7 @@
 import json
 import requests
+from helpme import save_json, extract_data
 
-def save_json(filename , json_data):
-    with open('{}.json'.format(filename), 'w') as fp:
-        json.dump(json_data, fp , indent= True)
 
 class repo():
     def __init__(self , username , project_id):
@@ -26,30 +24,27 @@ class repo():
             'git_url',
             ]
 
-        RepoData = {}
+        RepoData = extract_data(DataNeeded, RepoDataFromGithub)
 
-        for (k, v) in RepoDataFromGithub.items():
-            # print("Key: " + k)
-            # print("Value: " + str(v))
-            if k in DataNeeded:
-                RepoData[k] = v
         
 
-        print(json.dumps(RepoData , indent = True))
+        # print(json.dumps(RepoData , indent = True))
+        save_json('test2' , RepoData)
 
-        return RepoData
+        return json.dumps(RepoData , indent = True)
         
 
         # print(RepoDataFromGithub[1]['description'])
         # print(json.dumps(RepoDataFromGithub , indent= True))
 
-    def get_commits(self):
-        CommitURL = 'https://api.github.com/repos/{}/{}/commits?sha=master'.format(self.username , self.project_id)
+    # def get_commits(self):
+    #     CommitURL = 'https://api.github.com/repos/{}/{}/commits?sha=master'.format(self.username , self.project_id)
         
-        CommitDataFromGithub = requests.get(RepoURL).json()
+    #     CommitDataFromGithub = requests.get(RepoURL).json()
 
-        print
+    #     print
 
 
 repoo = repo('avikantsrivastava' , '100-days-of-ML-Code')
-repoo.get_repo_stats()
+data = repoo.get_repo_stats()
+print(data)

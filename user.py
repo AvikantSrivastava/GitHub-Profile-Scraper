@@ -1,5 +1,6 @@
 import json
 import requests
+from helpme import extract_data
 # from pprint import pprint
 
 # Username = input("Enter Your Username")
@@ -14,32 +15,26 @@ class User():
 
     def __init__(self, Username):
         self.Username = Username
-        self.UserURL = 'https://api.github.com/users/{}'.format(self.Username)
+        self.UserURL = 'https://api.github.com/users/{}'.format(self.Username)        
+
+    def get_user_stats(self):
+
         # this is data from github, we dont need all of it
         UserDataFromGithub = requests.get(self.UserURL).json()
+        DataNeeded = [
+            'name',
+            'type',
+            'company',
+            'blog',
+            'location',
+            'email',
+            'public_repos',
+            'followers'
+        ]
+        self.UserData = extract_data(DataNeeded, UserDataFromGithub)
+        return json.dumps(self.UserData, indent= True)
 
-
-        # this it the data we need
-        self.Name = UserDataFromGithub['name']
-        self.UserType = UserDataFromGithub['type']
-        self.Company = UserDataFromGithub['company']
-        self.Blog = UserDataFromGithub['blog']
-        self.Location = UserDataFromGithub['location']
-        self.Email = UserDataFromGithub['email']
-        self.PublicRepo = UserDataFromGithub['public_repos']
-        self.Followers = UserDataFromGithub['followers']
-
-    def get_json(self):
-        UserData = self.__dict__
-        # print(UserData)
-
-        return json.dumps(UserData, indent= True)
-
-    def pprint(self):
-        # print(self.Name)
-        # print(self.Location)
-        print(self )
 
 avikant = User('avikantsrivastava')
-data = avikant.get_json()
+data = avikant.get_user_stats()
 print(data)
