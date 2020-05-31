@@ -1,19 +1,17 @@
 import json
 import requests
-from helpme import save_json, extract_data
+from helpme import save_json, extract_data, group_with_same_key
 
 
 class repo():
-    def __init__(self , username , project_id):
+    def __init__(self , username , project_name):
         self.username = username
-        self.project_id = project_id
+        self.project_name = project_name
     
     def get_repo_stats(self):
-        RepoURL = 'https://api.github.com/repos/{}/{}'.format(self.username , self.project_id)
+        RepoURL = 'https://api.github.com/repos/{}/{}'.format(self.username , self.project_name)
         RepoDataFromGithub = requests.get(RepoURL).json()
-        
-        # RepoData = {}
-        # RepoData['name']
+     
         DataNeeded = [
             'name',
             'html_url',
@@ -25,26 +23,23 @@ class repo():
             ]
 
         self.RepoData = extract_data(DataNeeded, RepoDataFromGithub)
-
-        
-
-        # print(json.dumps(RepoData , indent = True))
         save_json('output_of_Repo' , self.RepoData)
-
-        return json.dumps(RepoData , indent = True)
+        return json.dumps(self.RepoData , indent = True)
         
+    def get_sha_values(self):
+        CommitURL = 'https://api.github.com/repos/{}/{}/commits'.format(self.username, self.project_name)
 
-        # print(RepoDataFromGithub[1]['description'])
-        # print(json.dumps(RepoDataFromGithub , indent= True))
+        CommitListFromGithub = requests.get(CommitURL).json()
 
-    # def get_commits(self):
-    #     CommitURL = 'https://api.github.com/repos/{}/{}/commits?sha=master'.format(self.username , self.project_id)
-        
-    #     CommitDataFromGithub = requests.get(RepoURL).json()
+        # CommitListExtracted = group_with_same_key(CommitListFromGithub,'sha')
+        CommitIDList = []
+        for i in range(len(CommitListFromGithub)):
+            CommitIDList.append(CommitListFromGithub[i]['sha'])
+        return CommitIDList
 
-    #     print
-
+        # save_json('CommitListFromGithub', CommitListFromGithub)
 
 repoo = repo('avikantsrivastava' , '100-days-of-ML-Code')
 data = repoo.get_repo_stats()
-print(data)
+repoo.get_sha_values()
+# print(data)

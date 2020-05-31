@@ -21,7 +21,7 @@ class Commit():
 
         CommitData = extract_data(DataNeeded, CommitDataFromGithub)
         save_json('output_of_commit', CommitData)
-
+    
 
 
 project = Commit('avikantsrivastava' , '100-days-of-ML-Code' , '339992040d807f1c382c858b53e35ed2699518d9') 
