@@ -21,7 +21,7 @@
 - A simple tool to fetch user details of a GitHub profile.
 - It is built on top of [GitHub API v3](https://developer.github.com/v3/).
 - Data is stored and manipulated in form of JSON.
-- The data which can be categorized in 3 classed
+- The data which can be grouped into 3 types, each with a different program and a python class.
 
   - **User Data** that contains user stats such 'Name', 'Location', 'Email', 'Followers' etc.
     Also stores a **Repository** list of the user.
@@ -30,7 +30,7 @@
   - **Commit Data** can be used to scrape commit history and 'Sha' values along with commit message.
 
 
-![](docs/giphy.gif)
+![](docs/driver_dot_py.gif)
 
 ## Getting Started
 
